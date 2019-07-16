@@ -1,11 +1,8 @@
-import re
-from tkinter import Button, Menu, Toplevel, Label, Text, PanedWindow , VERTICAL, END, messagebox, Tk, ttk
+from tkinter import Button, Menu, Toplevel, Label, Text, PanedWindow , VERTICAL, END, messagebox, Tk
 from tkinter.filedialog import askopenfilename
 import smtplib
 import pandas as pd
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-import datetime
 #############################################################
 #Global variables
 #############################################################
@@ -58,6 +55,7 @@ def readfrom_csv():
         set_pnumber(phone['Phone #'][x])
         set_servicep(phone['Provider'][x])
         send_SMS()
+    messagebox.showinfo('SENT!' , 'All messages have been sent to the people in the CSV file!!')
 def set_fname(firstname):
     global fname
     fname = firstname
@@ -108,7 +106,7 @@ def main_win(i):
     file_name.pack()
     smsBTN = Button(i, text = 'Send SMS', command = lambda:readfrom_csv())
     smsBTN.pack(side = 'bottom')
-    fbtn= Button(p, text = "Upload File",command = lambda:file_update(file_name, smsBTN))
+    fbtn= Button(p, text = "Upload File",command = lambda:file_update(file_name, smsBTN))f
     fbtn.pack( expand = 1)
     
     
