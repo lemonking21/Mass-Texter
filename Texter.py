@@ -20,6 +20,8 @@ def main():
     root.lift()
     main_win(root)
     root.mainloop()
+#############################################################
+#############################################################
 def send_SMS():
     global username, password, pnumber, servicep, lname, fname
     txtNum = str(pnumber) + str(servicep)
@@ -33,6 +35,8 @@ def send_SMS():
     text= message.as_string()
     server.sendmail(username, txtNum,text )
     server.quit()
+#############################################################
+#############################################################
 def select_file():
     global filename
     name = askopenfilename(initialdir='C:/Users/',
@@ -44,7 +48,9 @@ def select_file():
     #except:
         #print("No file exists")
     filename= name
-    return filename  
+    return filename
+#############################################################
+#############################################################  
 def readfrom_csv():
     global filename
     phone = pd.read_csv(filename)
@@ -56,18 +62,28 @@ def readfrom_csv():
         set_servicep(phone['Provider'][x])
         send_SMS()
     messagebox.showinfo('SENT!' , 'All messages have been sent to the people in the CSV file!!')
+#############################################################
+#############################################################
 def set_fname(firstname):
     global fname
     fname = firstname
+#############################################################
+#############################################################
 def set_lname(lastname):
     global lname
     lname =lastname
+#############################################################
+#############################################################
 def set_pnumber(phonenum):
     global pnumber
     pnumber= phonenum
+#############################################################
+#############################################################
 def set_servicep(serProvider):
     global servicep
     servicep = get_SP_extension(serProvider)
+#############################################################
+#############################################################
 def get_SP_extension(serProvider):
     serProvider = serProvider.lower()
     if serProvider == 'verizon':
@@ -90,12 +106,16 @@ def get_SP_extension(serProvider):
         return '@email.uucc.net'
     elif serProvider == 'virgin mobile':
         return '@vmobl.com'
+#############################################################
+#############################################################
 def file_update(i, j):
     name = select_file()
     i.config(state= 'normal')
     i.delete('1.0', END)
     i.insert('1.0',name)
     i.config(state= 'disable')
+#############################################################
+#############################################################
 def main_win(i):
     i.title('Mass Texter')
     p = PanedWindow(i, orient= VERTICAL, height = 10, width = 30)
@@ -106,9 +126,10 @@ def main_win(i):
     file_name.pack()
     smsBTN = Button(i, text = 'Send SMS', command = lambda:readfrom_csv())
     smsBTN.pack(side = 'bottom')
-    fbtn= Button(p, text = "Upload File",command = lambda:file_update(file_name, smsBTN))f
+    fbtn= Button(p, text = "Upload File",command = lambda:file_update(file_name, smsBTN))
     fbtn.pack( expand = 1)
-    
-    
-    
+#############################################################
+#############################################################
 main()
+#############################################################
+#############################################################
