@@ -40,8 +40,6 @@ def set_password(passwordN):
     global password
     password = passwordN.get('1.0',END)
     messagebox.showinfo('Email Account Set!' , 'Email account has been set!! You should be good to go!')
-
-
 #############################################################
 #############################################################
 def main():
@@ -145,7 +143,7 @@ def file_update(i, j):
 #############################################################
 #############################################################
 def main_win(i):
-    i.title('uto Mass Texter System')
+    i.title('Auto Mass Texter System')
     p = PanedWindow(i, orient= VERTICAL, height = 10, width = 30)
     p.pack()
     label = Label(p, text = 'Select a file with the clients firstname, lastname, Phone Number and Phone provider')
