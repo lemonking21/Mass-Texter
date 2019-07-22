@@ -1,18 +1,47 @@
 from tkinter import Button, Menu, Toplevel, Label, Text, PanedWindow , VERTICAL, END, messagebox, Tk
 from tkinter.filedialog import askopenfilename
 import smtplib
+import numpy
 import pandas as pd
 from email.mime.text import MIMEText
 #############################################################
 #Global variables
 #############################################################
-username = 'autotextingtest@gmail.com'
-password = '123456789Ab'
+username = ''#'autotextingtest@gmail.com'
+password = ''#'123456789Ab'
 pnumber = ''
 servicep = ''
 lname = ''
 fname = ''
 filename= ''
+message = ''
+
+
+def getuseremail(i):
+    global username, password
+    gemail = open_wind(i)
+    username_l = Label(gemail, text = 'Username:')
+    username_l.pack()
+    username_txt = Text(gemail, height = 1, width = 20)
+    username_txt.pack()
+    password_l = Label(gemail, text = 'Password:')
+    password_l.pack()
+    password_txt = Text(gemail, height = 1, width = 20)
+    password_txt.pack()
+    subbtn = Button(gemail, text ='Submit',command = lambda: (set_email_add(username_txt,password_txt)))
+    subbtn.pack(side = 'bottom')
+
+def set_email_add(emailN, passwordN):
+    global username
+    username = emailN.get('1.0',END)
+    set_password(passwordN)
+
+def set_password(passwordN):
+    global password
+    password = passwordN.get('1.0',END)
+    messagebox.showinfo('Email Account Set!' , 'Email account has been set!! You should be good to go!')
+
+
 #############################################################
 #############################################################
 def main():
@@ -23,11 +52,10 @@ def main():
 #############################################################
 #############################################################
 def send_SMS():
-    global username, password, pnumber, servicep, lname, fname
+    global username, password, pnumber, servicep, lname, fname, message
     txtNum = str(pnumber) + str(servicep)
 
-    msg = str(fname) + str(lname)
-    message = MIMEText('''Subject: text-message %s''' % (msg))
+    message = MIMEText('[A.M.T.S] \nDear ' + fname + ' ' + lname + '\n' + (message) + '')
 
     server = smtplib.SMTP('smtp.gmail.com',587)
     server.starttls()
@@ -117,7 +145,7 @@ def file_update(i, j):
 #############################################################
 #############################################################
 def main_win(i):
-    i.title('Mass Texter')
+    i.title('uto Mass Texter System')
     p = PanedWindow(i, orient= VERTICAL, height = 10, width = 30)
     p.pack()
     label = Label(p, text = 'Select a file with the clients firstname, lastname, Phone Number and Phone provider')
@@ -128,6 +156,46 @@ def main_win(i):
     smsBTN.pack(side = 'bottom')
     fbtn= Button(p, text = "Upload File",command = lambda:file_update(file_name, smsBTN))
     fbtn.pack( expand = 1)
+    win_menu(i)
+
+def win_menu(i):
+    menu= Menu(i)
+    i.config(menu=menu)
+    file= Menu(menu)
+    view = Menu(menu)
+    message = Menu(menu)
+    email = Menu(menu)
+
+
+    file.add_command(label = 'exit', command = i.destroy)
+    menu.add_cascade(label = 'File', menu = file)
+
+    view.add_command(label = 'Full Screen',  command= lambda:i.geometry("{0}x{1}+0+0".format(i.winfo_screenwidth(), i.winfo_screenheight())))
+    view.add_command(label = 'Original Size',  command= lambda:i.geometry('406x95'))
+    menu.add_cascade(label = 'View', menu = view)
+
+    message.add_command(label = 'Message',command = lambda:message_win(i))
+    menu.add_cascade(label = 'Message', menu = message)
+
+    email.add_command(label = 'Email',command = lambda:getuseremail(i))
+    menu.add_cascade(label = 'Email', menu = email)
+
+def message_win(i):
+    mess_w = open_wind(i)
+    mess = Text(mess_w, height = 10, width = 50)
+    mess.pack()
+    subbtn = Button(mess_w, text ='Submit',command = lambda:message_w(mess))
+    subbtn.pack(side = 'bottom')
+
+def open_wind(i):
+    i_win = Toplevel(i)
+    i_win.attributes('-topmost',1)
+    return i_win
+
+def message_w(mess):
+    global message
+    message = mess.get('1.0',END)
+
 #############################################################
 #############################################################
 main()
