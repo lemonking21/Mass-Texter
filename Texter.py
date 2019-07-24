@@ -7,8 +7,8 @@ from email.mime.text import MIMEText
 #############################################################
 #Global variables
 #############################################################
-username = ''#'autotextingtest@gmail.com'
-password = ''#'123456789Ab'
+username = ''
+password = ''
 pnumber = ''
 servicep = ''
 lname = ''
